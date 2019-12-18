@@ -49,7 +49,7 @@ def answerTop():
         if 'name' in i:
             output += (f"Команда {i['name']} занимает {i['rank']} место в рейтинге,имея {i['rank-points']} очков\n  Состав\n")
             team = top[count]
-            players = sostav['team-players']
+            players = team['team-players']
             for j in range(5):
                 player = players[j]
                 nick = player['player_name']
@@ -63,7 +63,7 @@ def answerResults():
     res = parser.get_results()
     for i in res:
         if 'date' in i:
-            output += (f" Матч между  {i['team1']} и {i['team2']} на турнире {i['event']} завершился со счётом {i['team1score']}-{i['team2score']}.\n")
+            output += (f"— Матч между {i['team1']} и {i['team2']} на турнире {i['event']} завершился со счётом {i['team1score']}-{i['team2score']}.\n")
     return output
 
 def answerMatches():
@@ -72,7 +72,7 @@ def answerMatches():
     matches = parser.get_matches()
     for i in matches:
         if 'date' in i:
-            output += (f"{i['date']} на турнире {i['event']} в {i['time']} встретятся  {i['team1']} и {i['team2']}.\n")
+            output += (f"— {i['date']} на турнире {i['event']} в {i['time']} встретятся {i['team1']} и {i['team2']}.\n")
     return output
 
 bot.polling(none_stop=True)
