@@ -63,7 +63,7 @@ def answerResults():
     for i in res:
         if 'date' in i:
             output += (f"— Матч между {i['team1']} и {i['team2']} на турнире {i['event']} завершился со счётом {i['team1score']}-{i['team2score']}.\n")
-    output.replace("b\'", "\'")    
+    output = output.replace("b\'", "\'")    
     return output
 
 def answerMatches():
@@ -73,7 +73,7 @@ def answerMatches():
     for i in matches:
         if 'date' in i:
             output += (f"({i['date']}) на турнире {i['event']} в ({i['time']}) встретятся {i['team1']} и {i['team2']}.\n")
-    output.replace("b\'", "\'")
+    output = output.replace("b\'", "\'")
     return output
 
 bot.polling(none_stop=True)
