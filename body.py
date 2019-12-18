@@ -21,24 +21,26 @@ def start_handler(message):
 def askSource(message):
     chat_id = message.chat.id
     msg = bot.send_message(chat_id, 'Вот что вы запрашивали')
-    text = message.text.lower() 
+    text = message.text.lower()
+    output = '' 
     if text in task.sources[0]:
         msg = bot.send_message(chat_id, 'Результаты последних 10 матчей')
-        bot.register_next_step_handler(msg, answerResults)
+        output = answerResults()
+        msg = bot.send_message(chat_id, output, reply_markup=m.start_markup)
     elif text in task.sources[1]:
         msg = bot.send_message(chat_id, 'Ближайшие 15 матчей')
-        bot.register_next_step_handler(msg, answerMatches)
+        output = answerMatches()
+        msg = bot.send_message(chat_id, output, reply_markup=m.start_markup)
     elif text in task.sources[2]:
         msg = bot.send_message(chat_id, 'Топ-5 команд')
-        bot.register_next_step_handler(msg, answerTop)
+        output = answerTop()
+        msg = bot.send_message(chat_id, output, reply_markup=m.start_markup)
     else:
         msg = bot.send_message(chat_id, 'Такого раздела нет. Введите раздел корректно.')
         bot.register_next_step_handler(msg, askSource)
         return
 
-def answerTop(message):
-    chat_id = message.chat.id
-    text = message.text.lower()
+def answerTop():
     task.isRunning = False
     output = ''
     top = parser.top5teams()
@@ -53,29 +55,24 @@ def answerTop(message):
                 nick = player['player_name']
                 output += ('   — '+nick+';\n')
             count+=1
+    return output
 
-    msg = bot.send_message(chat_id, output, reply_markup=m.start_markup)
-
-def answerResults(message):
-    chat_id = message.chat.id
-    text = message.text.lower()
+def answerResults():
     task.isRunning = False
     output = ''
     res = parser.get_results()
     for i in res:
         if 'date' in i:
             output += (f" Матч между  {i['team1']} и {i['team2']} на турнире {i['event']} завершился со счётом {i['team1score']}-{i['team2score']}.\n")
-    msg = bot.send_message(chat_id, output, reply_markup=m.start_markup)
+    return output
 
-def answerMatches(message):
-    chat_id = message.chat.id
-    text = message.text.lower()
+def answerMatches():
     task.isRunning = False
     output = ''
     matches = parser.get_matches()
     for i in matches:
         if 'date' in i:
             output += (f"{i['date']} на турнире {i['event']} в {i['time']} встретятся  {i['team1']} и {i['team2']}.\n")
-    msg = bot.send_message(chat_id, output, reply_markup=m.start_markup)
+    return output
 
 bot.polling(none_stop=True)
