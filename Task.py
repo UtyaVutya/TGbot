@@ -6,4 +6,4 @@ class Task():
         ['top-5 teams', 'топ-5 команд', 'топ5', 'top5']
     ]
     def __init__(self):
-        returns
+        return
