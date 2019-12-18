@@ -20,12 +20,16 @@ def start_handler(message):
 
 def askSource(message):
     chat_id = message.chat.id
-    text = message.text.lower()
+    msg = bot.send_message(chat_id, 'Вот что вы запрашивали')
+    text = message.text.lower() 
     if text in task.sources[0]:
+        msg = bot.send_message(chat_id, 'Результаты последних 10 матчей')
         bot.register_next_step_handler(msg, answerResults)
     elif text in task.sources[1]:
+        msg = bot.send_message(chat_id, 'Ближайшие 15 матчей')
         bot.register_next_step_handler(msg, answerMatches)
     elif text in task.sources[2]:
+        msg = bot.send_message(chat_id, 'Топ-5 команд')
         bot.register_next_step_handler(msg, answerTop)
     else:
         msg = bot.send_message(chat_id, 'Такого раздела нет. Введите раздел корректно.')
