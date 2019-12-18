@@ -20,7 +20,6 @@ def start_handler(message):
 
 def askSource(message):
     chat_id = message.chat.id
-    msg = bot.send_message(chat_id, 'Вот что вы запрашивали')
     text = message.text.lower()
     output = '' 
     if text in task.sources[0]:
