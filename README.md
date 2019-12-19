@@ -1,1 +1,1 @@
-# Visit our tg-bot @allsportstatsbot
+# TGbot

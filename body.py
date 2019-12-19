@@ -10,7 +10,7 @@ bot = telebot.TeleBot(TOKEN)
 task = Task()
 
 #handlers
-@bot.message_handler(commands=['start', 'go'])
+@bot.message_handler(commands=['start', 'Назад'])
 def start_handler(message):
     if not task.isRunning:
         chat_id = message.chat.id
@@ -25,15 +25,15 @@ def askSource(message):
     if text in task.sources[0]:
         msg = bot.send_message(chat_id, 'Результаты последних 10 матчей')
         output = answerResults()
-        msg = bot.send_message(chat_id, output, reply_markup=m.start_markup)
+        msg = bot.send_message(chat_id, output, reply_markup=m.back_markup)
     elif text in task.sources[1]:
         msg = bot.send_message(chat_id, 'Ближайшие 15 матчей')
         output = answerMatches()
-        msg = bot.send_message(chat_id, output, reply_markup=m.start_markup)
+        msg = bot.send_message(chat_id, output, reply_markup=m.back_markup)
     elif text in task.sources[2]:
         msg = bot.send_message(chat_id, 'Топ-5 команд')
         output = answerTop()
-        msg = bot.send_message(chat_id, output, reply_markup=m.start_markup)
+        msg = bot.send_message(chat_id, output, reply_markup=m.back_markup)
     else:
         msg = bot.send_message(chat_id, 'Такого раздела нет. Введите раздел корректно.')
         bot.register_next_step_handler(msg, askSource)
@@ -72,7 +72,7 @@ def answerMatches():
     matches = parser.get_matches()
     for i in matches:
         if 'date' in i:
-            output += (f"({i['date']}) на турнире {i['event']} в ({i['time']}) встретятся {i['team1']} и {i['team2']}.\n")
+            output += (f"({i['date']}) на турнире {i['event']} в {i['time']} (UTC+03:00) встретятся {i['team1']} и {i['team2']}.\nСсылка на матч: {i['url']}\n")
     output = output.replace("b\'", "\'")
     return output
 
