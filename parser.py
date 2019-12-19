@@ -48,7 +48,10 @@ def get_matches():
  
             matchObj['date'] = match.find("span", {"class": "standard-headline"}).text.encode('utf8')
             matchObj['time'] = getMatch.find("td", {"class": "time"}).text.lstrip().rstrip()
-            matchObj['time'] = (matchObj['time'][:1] + str(int(matchObj['time'][:2])+2) + matchObj['time'][2:]).encode('utf-8')
+            if int(matchObj['time'][:2])+2 < 10:
+                matchObj['time'] = ('0' + str(int(matchObj['time'][:2])+2) + matchObj['time'][2:]).encode('utf-8')
+            else:
+                matchObj['time'] = (str(int(matchObj['time'][:2])+2) + matchObj['time'][2:]).encode('utf-8')
  
             if (getMatch.find("td", {"class": "placeholder-text-cell"})):
                 matchObj['event'] = getMatch.find("td", {"class": "placeholder-text-cell"}).text.encode('utf8')
