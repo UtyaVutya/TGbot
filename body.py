@@ -72,7 +72,7 @@ def answerMatches():
     matches = parser.get_matches()
     for i in matches:
         if 'date' in i:
-            output += (f"({i['date']}) на турнире {i['event']} в ({i['time']}) встретятся {i['team1']} и {i['team2']}.\nСсылка на матч: {i['url']}\n")
+            output += (f"({i['date']}) на турнире {i['event']} в {i['time']} (UTC+03:00) встретятся {i['team1']} и {i['team2']}.\nСсылка на матч: {i['url']}\n")
     output = output.replace("b\'", "\'")
     return output
 
