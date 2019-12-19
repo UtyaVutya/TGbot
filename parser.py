@@ -42,12 +42,13 @@ def get_matches():
  
     for match in matchdays:
         matchDetails = match.find_all("table", {"class": "table"})
- 
+        count = 0
         for getMatch in matchDetails:
             matchObj = {}
  
             matchObj['date'] = match.find("span", {"class": "standard-headline"}).text.encode('utf8')
-            matchObj['time'] = getMatch.find("td", {"class": "time"}).text.encode('utf8').lstrip().rstrip()
+            matchObj['time'] = getMatch.find("td", {"class": "time"}).text.lstrip().rstrip()
+            matchObj['time'] = (matchObj['time'][:1] + str(int(matchObj['time'][:2])+2) + matchObj['time'][2:]).encode('utf-8')
  
             if (getMatch.find("td", {"class": "placeholder-text-cell"})):
                 matchObj['event'] = getMatch.find("td", {"class": "placeholder-text-cell"}).text.encode('utf8')
@@ -64,6 +65,11 @@ def get_matches():
             else:
                 matchObj['team1'] = 'Ещё не определённая'
                 matchObj['team2'] = 'Ещё не определённая'
+
+            url = match.find_all("a", {"class": "a-reset"})[count].get("href")
+            matchObj['url'] = 'http://www.hltv.org' + url
+            count += 1
+            
             if len(matches_list) < 15:
                 matches_list.append(matchObj)
  

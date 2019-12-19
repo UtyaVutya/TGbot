@@ -14,3 +14,7 @@ source_markup_btn1 = types.KeyboardButton('Results')
 source_markup_btn2 = types.KeyboardButton('Upcoming matches')
 source_markup_btn3 = types.KeyboardButton('Top-5 teams')
 source_markup.add(source_markup_btn1, source_markup_btn2, source_markup_btn3)
+
+back_markup = types.ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
+back_markup_btn1 = types.KeyboardButton('/back')
+back_markup.add(back_markup_btn1)

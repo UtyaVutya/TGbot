@@ -5,12 +5,12 @@ import parser
 import markups as m
 
 #main variables
-TOKEN = '<TOKEN>'
+TOKEN = '1050010216:AAGJ1wTJPsxMoTyxTnC07SXrQFe4bP-BBWA'
 bot = telebot.TeleBot(TOKEN)
 task = Task()
 
 #handlers
-@bot.message_handler(commands=['start', 'go'])
+@bot.message_handler(commands=['start', 'back'])
 def start_handler(message):
     if not task.isRunning:
         chat_id = message.chat.id
@@ -72,7 +72,7 @@ def answerMatches():
     matches = parser.get_matches()
     for i in matches:
         if 'date' in i:
-            output += (f"({i['date']}) на турнире {i['event']} в ({i['time']}) встретятся {i['team1']} и {i['team2']}.\n")
+            output += (f"({i['date']}) на турнире {i['event']} в ({i['time']}) встретятся {i['team1']} и {i['team2']}.\n Ссылка на матч: {i['url']}\n")
     output = output.replace("b\'", "\'")
     return output
 
